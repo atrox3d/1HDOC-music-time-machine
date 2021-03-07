@@ -21,7 +21,7 @@ class Billboard:
         self.current_url = f"{self.url}/{date}"
         if self.cache.is_cached(date):
             print(f"date {date} found in cache, loading local copy...")
-            page = self.cache.load_page(date)
+            page = self.cache.load(date)
         else:
             print(f"date {date} not found in cache, downloading...")
             response = requests.get(self.current_url)
@@ -33,9 +33,9 @@ class Billboard:
 
         return page
 
-    def get_songlist(self, date)-> Hot100:
+    def get_songlist(self, date: str) -> Hot100:
         self.date = date
-        page = self.get_page(date)
+        page = self.get_page(self.date)
         print(f"scanning: {self.current_url}...")
         soup = BeautifulSoup(page, "html.parser")
 
@@ -48,10 +48,9 @@ class Billboard:
         self.artists = [artist.getText() for artist in soup.find_all(name="span", class_=artist_class)]
 
         hot100 = Hot100(
-            date=date,
+            date=self.date,
             positions=self.positions,
             songs=self.songs,
             artists=self.artists
         )
-
         return hot100
