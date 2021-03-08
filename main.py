@@ -1,5 +1,6 @@
-from billboard.billboard import Billboard
-from spotify.spotify import SpotifyConnector
+from billboard import Billboard
+from spotify import SpotifyConnector
+import json
 
 date = "1981-12-27"     # adriano
 date = "1938-03-29"     # papà
@@ -17,6 +18,8 @@ h100.list()
 
 spc = SpotifyConnector(debug=False)
 sp = spc.get_client()
-
-print(sp.me())
+print(type(sp.me()))
+print(
+    json.dumps(sp.me(), indent=4)
+)
 
