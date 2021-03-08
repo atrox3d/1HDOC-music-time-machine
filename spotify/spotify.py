@@ -1,6 +1,6 @@
 import spotipy
-
 from myob import spotify
+import json
 
 SPOTIFY_CLIENT_ID = spotify.CLIENT_ID
 SPOTIFY_CLIENT_SECRET = spotify.CLIENT_SECRET
@@ -60,3 +60,8 @@ class SpotifyConnector:
         else:
             self.client = spotipy.Spotify(auth_manager=auth)
             return self.client
+
+    def get_token(self):
+        with open(self.cache_path) as cachefile:
+            j = json.load(cachefile)
+            print(json.dumps(j, indent=4))

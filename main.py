@@ -23,3 +23,4 @@ print(
     json.dumps(sp.me(), indent=4)
 )
 
+print(spc.get_token())
