@@ -1,4 +1,5 @@
 from billboard.billboard import Billboard
+from spotify.spotify import SpotifyConnector
 
 date = "1981-12-27"     # adriano
 date = "1938-03-29"     # papà
@@ -13,4 +14,9 @@ bb = Billboard()
 h100 = bb.get_songlist(date)
 
 h100.list()
+
+spc = SpotifyConnector(debug=False)
+sp = spc.get_client()
+
+print(sp.me())
 
