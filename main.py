@@ -2,6 +2,8 @@ from billboard import Billboard
 from spotify import SpotifyConnector
 import json
 
+import util
+
 date = "1981-12-27"     # adriano
 date = "1938-03-29"     # papà
 date = "1978-05-23"     # silvia
@@ -12,9 +14,10 @@ if not date:
     date = input("when do you want to go? insert date in this format YYYY-MM-DD: ")
 
 bb = Billboard()
-h100 = bb.get_songlist(date)
 
+h100 = bb.get_songlist(date, test="test", test2=2)
 h100.list()
+# exit()
 
 spc = SpotifyConnector(debug=False)
 sp = spc.get_client()

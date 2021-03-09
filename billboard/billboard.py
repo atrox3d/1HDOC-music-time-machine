@@ -3,11 +3,16 @@ from .hot100_model import Hot100
 import requests
 import bs4
 from bs4 import BeautifulSoup
+from util import logger
+# import logging
 
 BASE_URL = "https://www.billboard.com/charts/hot-100"
 
 
 class Billboard:
+    # log = logger.get_cli_logger(__qualname__)
+
+    @logger.logger_arguments(True)
     def __init__(self):
         self.cache = BillboardCache()
         self.date = ""
@@ -16,8 +21,11 @@ class Billboard:
         self.positions = []
         self.songs = []
         self.artists = []
+        # Billboard.log.info("")
 
+    @logger.logger_arguments(True)
     def get_page(self, date):
+        # Billboard.log.info("")
         self.current_url = f"{self.url}/{date}"
         if self.cache.is_cached(date):
             print(f"date {date} found in cache, loading local copy...")
@@ -33,7 +41,9 @@ class Billboard:
 
         return page
 
-    def get_songlist(self, date: str) -> Hot100:
+    @logger.logger_arguments(True)
+    def get_songlist(self, date: str, **kwargs) -> Hot100:
+        # Billboard.log.info("")
         self.date = date
         page = self.get_page(self.date)
         print(f"scanning: {self.current_url}...")
