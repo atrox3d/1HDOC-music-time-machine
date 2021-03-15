@@ -12,7 +12,7 @@ BASE_URL = "https://www.billboard.com/charts/hot-100"
 class Billboard:
     # log = logger.get_cli_logger(__qualname__)
 
-    @logger.logger_arguments(True)
+    @logger.logger_decorator_with_arguments(True)
     def __init__(self):
         self.cache = BillboardCache()
         self.date = ""
@@ -23,7 +23,7 @@ class Billboard:
         self.artists = []
         # Billboard.log.info("")
 
-    @logger.logger_arguments(True)
+    @logger.logger_decorator_with_arguments(True)
     def get_page(self, date):
         # Billboard.log.info("")
         self.current_url = f"{self.url}/{date}"
@@ -41,7 +41,7 @@ class Billboard:
 
         return page
 
-    @logger.logger_arguments(True)
+    @logger.logger_decorator_with_arguments(True)
     def get_songlist(self, date: str, **kwargs) -> Hot100:
         # Billboard.log.info("")
         self.date = date

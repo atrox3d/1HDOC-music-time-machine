@@ -10,7 +10,7 @@ SPOTIFY_CLIENT_SCOPE = "playlist-modify-private"
 
 
 class SpotifyConnector:
-    @logger.logger_arguments(True)
+    @logger.logger_decorator_with_arguments(True)
     def __init__(
             self,
             debug=True,
@@ -31,7 +31,7 @@ class SpotifyConnector:
         self.oauth = None
         self.client = None
 
-    @logger.logger_arguments(True)
+    @logger.logger_decorator_with_arguments(True)
     def get_oauth(self) -> spotipy.oauth2.SpotifyOAuth:
         print(f"self.oauth = spotipy.oauth2.SpotifyOAuth(")
         print(f"    client_id={self.client_id},")
@@ -54,7 +54,7 @@ class SpotifyConnector:
             )
             return self.oauth
 
-    @logger.logger_arguments(True)
+    @logger.logger_decorator_with_arguments(True)
     def get_client(self) -> spotipy.Spotify:
         print(f"auth = self.get_oauth()")
         auth = self.get_oauth()
@@ -65,7 +65,7 @@ class SpotifyConnector:
             self.client = spotipy.Spotify(auth_manager=auth)
             return self.client
 
-    @logger.logger_arguments(True)
+    @logger.logger_decorator_with_arguments(True)
     def get_token(self):
         with open(self.cache_path) as cachefile:
             j = json.load(cachefile)
