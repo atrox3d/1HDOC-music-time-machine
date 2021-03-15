@@ -12,7 +12,7 @@ if not date:
     # TODO: add regex for input validation
     date = input("when do you want to go? insert date in this format YYYY-MM-DD: ")
 
-# util.logger.disable()
+util.logger.disable()
 
 bb = Billboard()
 
@@ -52,7 +52,6 @@ for index in range(len(h100.songs)):
     pass
 
 print(f"found songs: {found}, not found songs: {not_found}")
-# exit()
 
 playlist_name = f"{date} Billboard 100 ({found})"
 playlist = spcli.user_playlist_create(

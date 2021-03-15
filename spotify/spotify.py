@@ -25,6 +25,7 @@ class SpotifyConnector:
             scope=SPOTIFY_CLIENT_SCOPE,
             show_dialogue=True,
             cache_path="myob/token.txt",
+            enable_library_logging=False,
     ):
         """
         save references to spotipy parameters
@@ -48,10 +49,10 @@ class SpotifyConnector:
         self.logger = logger.get_cli_logger("CLASS:" + __class__.__name__)
         self.logger.setLevel("DEBUG")
         self.spotipyLogger = spotipy.client.logger
-        # logging.getLogger().setLevel(logging.DEBUG)
-        self.spotipyLogger.addHandler(logging.StreamHandler())
-        self.spotipyLogger.setLevel(logging.DEBUG)
-        self.spotipyLogger.info("WOOOOOOOOOOOOOOOOOOOOOOO")
+        if enable_library_logging:
+            self.spotipyLogger.addHandler(logging.StreamHandler())
+            self.spotipyLogger.setLevel(logging.DEBUG)
+            self.spotipyLogger.info("WOOOOOOOOOOOOOOOOOOOOOOO")
 
 
 
@@ -108,14 +109,13 @@ class SpotifyConnector:
         self.logger.debug(f"QUERY : q={q_uri}")
         result = self.client.search(q=q_uri, type="track")
 
-        # print(json.dumps(result, indent=4))
-
-
+        print("-" * 80)
         for song_item in result["tracks"]["items"]:
             song_name = song_item["name"]
             for artist_item in song_item["artists"]:
                 artist_name = artist_item["name"]
                 print(f"SONG: {song_name}, ARTIST: {artist_name}")
+        print("-" * 80)
 
         try:
             song_uri = result["tracks"]["items"][0]["uri"]
