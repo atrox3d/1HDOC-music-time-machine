@@ -59,6 +59,7 @@ class Billboard:
 
         hot100 = Hot100(
             date=self.date,
+            url=self.current_url,
             positions=self.positions,
             songs=self.songs,
             artists=self.artists

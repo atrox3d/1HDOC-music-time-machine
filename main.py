@@ -12,13 +12,14 @@ if not date:
     # TODO: add regex for input validation
     date = input("when do you want to go? insert date in this format YYYY-MM-DD: ")
 
-util.logger.disable()
+# util.logger.disable()
 
 bb = Billboard()
 
 h100 = bb.get_songlist(date, testlogger1="test", testlogger2=2)
 h100.list()
 
+# util.logger.enable()
 spconn = SpotifyConnector(debug=False)
 spcli = spconn.get_client()
 print("me(): ", type(spcli.me()))
@@ -36,20 +37,31 @@ not_found = 0
 for index in range(len(h100.songs)):
     song = h100.songs[index]
     artist = h100.artists[index]
-    print(f"SONG  : {song}")
-    print(f"ARTIST: {artist}")
-    print(f"YEAR  : {year}")
-    song_uri = spconn.search_track(song, year)
+    print(f"SEARCH SONG  : {song}")
+    print(f"SEARCH ARTIST: {artist}")
+    print(f"SEARCH YEAR  : {year}")
+    song_uri = spconn.search_track(song, year, artist)
     if song_uri:
         print(f"OK    | {song_uri}")
         song_uris.append(song_uri)
         found += 1
     else:
         print(f"ERROR | {song} NOT found")
-        song_uris.append("NOT FOUND")
+        # song_uris.append("NOT FOUND")
         not_found += 1
     pass
 
 print(f"found songs: {found}, not found songs: {not_found}")
+# exit()
 
+playlist_name = f"{date} Billboard 100 ({found})"
+playlist = spcli.user_playlist_create(
+    user=spcli.me()["id"],
+    name=playlist_name,
+    description=f"list of top 100 songs on {date} according to Billboard {h100.url}",
+    public=False,
+    # collaborative=False,
+)
+print(json.dumps(playlist, indent=4))
+spcli.playlist_add_items(playlist["id"], song_uris)
 

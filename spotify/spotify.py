@@ -1,3 +1,5 @@
+import logging
+import requests
 from util import logger
 import spotipy
 from myob import spotify
@@ -41,10 +43,17 @@ class SpotifyConnector:
         self.scope = scope
         self.show_dialogue = show_dialogue
         self.cache_path = cache_path
-        self.oauth = None
-        self.client = None
+        self.oauth: spotipy.SpotifyOAuth = None
+        self.client: spotipy.Spotify = None
         self.logger = logger.get_cli_logger("CLASS:" + __class__.__name__)
         self.logger.setLevel("DEBUG")
+        self.spotipyLogger = spotipy.client.logger
+        # logging.getLogger().setLevel(logging.DEBUG)
+        self.spotipyLogger.addHandler(logging.StreamHandler())
+        self.spotipyLogger.setLevel(logging.DEBUG)
+        self.spotipyLogger.info("WOOOOOOOOOOOOOOOOOOOOOOO")
+
+
 
     @logger.logger_decorator_with_arguments(True)
     def get_oauth(self) -> spotipy.oauth2.SpotifyOAuth:
@@ -91,11 +100,23 @@ class SpotifyConnector:
             return self.client
 
     @logger.logger_decorator_with_arguments(True)
-    def search_track(self, song, year):
-        # q_uri = f"track:{song} year:{year} artist:{artist}"
-        q_uri = f"track:{song} year:{year}"
+    def search_track(self, song, year, artist):
+        # q_uri = f"track:{song} year:{year}"
+        # q_uri = f'artist:"{artist}" "{song}" year:{year}'
+        song = song.replace("'", " ")
+        q_uri = f'{song} artist:{artist}'
         self.logger.debug(f"QUERY : q={q_uri}")
         result = self.client.search(q=q_uri, type="track")
+
+        # print(json.dumps(result, indent=4))
+
+
+        for song_item in result["tracks"]["items"]:
+            song_name = song_item["name"]
+            for artist_item in song_item["artists"]:
+                artist_name = artist_item["name"]
+                print(f"SONG: {song_name}, ARTIST: {artist_name}")
+
         try:
             song_uri = result["tracks"]["items"][0]["uri"]
             self.logger.info(f"OK    | {song_uri}")
