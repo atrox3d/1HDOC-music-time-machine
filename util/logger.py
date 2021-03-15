@@ -38,8 +38,8 @@ def get_cli_logger(
         - SET LEVEL TO DEBUG (DEFAULT IS WARNING)
     ########################################################################################################################
     """
-    _logger = logging.getLogger(name)   # get local logger
-    _logger.setLevel(level)             # set logger level >= logger_level
+    _logger = logging.getLogger(name)  # get local logger
+    _logger.setLevel(level)  # set logger level >= logger_level
     """
     ########################################################################################################################
         - GET SAME FORMATTER INSTANCE FOR ALL HANDLERS
@@ -71,21 +71,9 @@ def get_child_logger(parent, name):
         raise TypeError
 
 
-#
-#   create parent logger for module
-#
-module_logger = get_cli_logger(
-    # "util.logger",
-    __name__,
-    # level="DEBUG",
-    output_stream=sys.stdout
-)
-module_logger.setLevel(logging.INFO)    # do not show children's debug log
-
-
 def logger_decorator_with_arguments(
-        ismethod,                   # is ismethod == True ignore self when logging arguments
-        func_logging_level="INFO"   # logging level for decorated function
+        ismethod,  # is ismethod == True ignore self when logging arguments
+        func_logging_level="INFO"  # logging level for decorated function
 ):
     """
     wraps decorator to pass arguments to the logger
@@ -93,7 +81,7 @@ def logger_decorator_with_arguments(
     """
     tabs = 1
     debuggers = []
-    debuggers.append(get_child_logger(module_logger, "arguments"))
+    debuggers.append(get_child_logger(_module_logger, "arguments"))
     debugger = debuggers[-1]
     #
     #   this will be output only if the module debugger is set to DEBUG
@@ -167,6 +155,25 @@ def logger_decorator_with_arguments(
     debugger.debug("logger_arguments: return logger_decorator")
     return logger_decorator
 
+
+def enable():
+    logging.disable(logging.NOTSET)
+
+
+def disable():
+    logging.disable(logging.CRITICAL)
+
+
+#
+#   create parent logger for module
+#
+_module_logger = get_cli_logger(
+    # "util.logger",
+    __name__,
+    # level="DEBUG",
+    output_stream=sys.stdout
+)
+_module_logger.setLevel(logging.INFO)  # do not show children's debug log
 
 if __name__ == '__main__':
     logger = get_cli_logger("test." + __name__)

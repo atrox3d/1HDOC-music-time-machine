@@ -1,8 +1,7 @@
 from billboard import Billboard
 from spotify import SpotifyConnector
 import json
-
-import util
+import util.logger
 
 date = "1981-12-27"     # adriano
 date = "1938-03-29"     # papà
@@ -12,6 +11,8 @@ date = "1982-07-21"     # cika
 if not date:
     # TODO: add regex for input validation
     date = input("when do you want to go? insert date in this format YYYY-MM-DD: ")
+
+util.logger.disable()
 
 bb = Billboard()
 
