@@ -104,9 +104,13 @@ class SpotifyConnector:
     def search_track(self, song, year, artist):
         # q_uri = f"track:{song} year:{year}"
         # q_uri = f'artist:"{artist}" "{song}" year:{year}'
+        song = song.lower()
         song = song.replace("'", " ")
+        artist = artist.lower()
+        artist = artist.replace("featuring", "")
         q_uri = f'{song} artist:{artist}'
         self.logger.debug(f"QUERY : q={q_uri}")
+        print(f"q={q_uri}")
         result = self.client.search(q=q_uri, type="track")
 
         print("-" * 80)

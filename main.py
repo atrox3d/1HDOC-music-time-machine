@@ -8,6 +8,7 @@ date = "1938-03-29"     # papà
 date = "1978-05-23"     # silvia
 date = "1970-07-13"     # io
 date = "1982-07-21"     # cika
+date = "2012-02-14"     # brian
 if not date:
     # TODO: add regex for input validation
     date = input("when do you want to go? insert date in this format YYYY-MM-DD: ")
@@ -46,10 +47,10 @@ for index in range(len(h100.songs)):
         song_uris.append(song_uri)
         found += 1
     else:
-        print(f"ERROR | {song} NOT found")
+        print(f"ERROR | {song} -- NOT found * * * * * * * * *")
         # song_uris.append("NOT FOUND")
         not_found += 1
-    pass
+    print("-" * 80)
 
 print(f"found songs: {found}, not found songs: {not_found}")
 
