@@ -144,6 +144,8 @@ def logger_decorator_with_arguments(
             debugger.debug("\t" * tabs + f"logger_wrapper: call {func.__qualname__}({all_arguments})")
 
             _logger = get_cli_logger(func.__qualname__, func_logging_level)
+            # logger_wrapper.logger = _logger # attach logger to function (wrapped) as attribute
+            # print(logger_wrapper.logger)
             _logger.info(message)  # log arguments before function
             _return = func(*args, **kwargs)  # execute function
             _logger.info("end")  # log after function

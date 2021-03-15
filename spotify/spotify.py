@@ -10,6 +10,9 @@ SPOTIFY_CLIENT_SCOPE = "playlist-modify-private"
 
 
 class SpotifyConnector:
+    """
+    proxy to spotpy module
+    """
     @logger.logger_decorator_with_arguments(True)
     def __init__(
             self,
@@ -21,6 +24,16 @@ class SpotifyConnector:
             show_dialogue=True,
             cache_path="myob/token.txt",
     ):
+        """
+        save references to spotipy parameters
+        :param debug:
+        :param client_id:
+        :param client_secret:
+        :param redirect_uri:
+        :param scope:
+        :param show_dialogue:
+        :param cache_path:
+        """
         self.debug = debug
         self.client_id = client_id
         self.client_secret = client_secret
@@ -30,18 +43,26 @@ class SpotifyConnector:
         self.cache_path = cache_path
         self.oauth = None
         self.client = None
+        self.logger = logger.get_cli_logger(__class__.__name__)
+        self.logger.setLevel("DEBUG")
 
     @logger.logger_decorator_with_arguments(True)
     def get_oauth(self) -> spotipy.oauth2.SpotifyOAuth:
-        print(f"self.oauth = spotipy.oauth2.SpotifyOAuth(")
-        print(f"    client_id={self.client_id},")
-        print(f"    client_secret={self.client_secret},")
-        print(f"    redirect_uri={self.redirect_uri},")
-        print(f"    scope={self.scope},")
-        print(f"    show_dialog={self.show_dialogue},")
-        print(f"    cache_path={self.cache_path}")
-        print(f")")
+        """
+        creates a spotipy.oauth2.SpotifyOAuth object
+        :return:
+        """
+        # _logger = self.get_oauth.logger
+        self.logger.debug(f"self.oauth = spotipy.oauth2.SpotifyOAuth(")
+        self.logger.debug(f"    client_id={self.client_id},")
+        self.logger.debug(f"    client_secret={self.client_secret},")
+        self.logger.debug(f"    redirect_uri={self.redirect_uri},")
+        self.logger.debug(f"    scope={self.scope},")
+        self.logger.debug(f"    show_dialog={self.show_dialogue},")
+        self.logger.debug(f"    cache_path={self.cache_path}")
+        self.logger.debug(f")")
         if self.debug:
+            self.logger.debug("debug is active, not calling API")
             return None
         else:
             self.oauth = spotipy.oauth2.SpotifyOAuth(
@@ -56,17 +77,21 @@ class SpotifyConnector:
 
     @logger.logger_decorator_with_arguments(True)
     def get_client(self) -> spotipy.Spotify:
-        print(f"auth = self.get_oauth()")
+        """
+        creates a spotipy.Spotify client object
+        :return:
+        """
+        self.logger.debug(f"auth = self.get_oauth()")
         auth = self.get_oauth()
+        self.logger.debug(f"self.client = spotipy.Spotify(auth_manager=auth)")
         if self.debug:
-            print(f"self.client = spotipy.Spotify(auth_manager=auth)")
             return None
         else:
             self.client = spotipy.Spotify(auth_manager=auth)
             return self.client
 
     @logger.logger_decorator_with_arguments(True)
-    def get_token(self):
+    def dump_spotify_token(self):
         with open(self.cache_path) as cachefile:
             j = json.load(cachefile)
             print(json.dumps(j, indent=4))

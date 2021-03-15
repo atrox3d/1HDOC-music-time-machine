@@ -15,7 +15,7 @@ if not date:
 
 bb = Billboard()
 
-h100 = bb.get_songlist(date, test="test", test2=2)
+h100 = bb.get_songlist(date, testlogger1="test", testlogger2=2)
 h100.list()
 # exit()
 
@@ -26,7 +26,7 @@ print(
     json.dumps(sp.me(), indent=4)
 )
 
-print(spc.get_token())
+print(spc.dump_spotify_token())
 
 year = date.split("-")[0]
 song_uris = []
