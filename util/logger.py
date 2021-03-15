@@ -54,7 +54,7 @@ def get_cli_logger(
         - ADD HANDLER TO LOCAL LOGGER
     ########################################################################################################################
     """
-    if set_handler:
+    if set_handler and not _logger.hasHandlers():
         cli_handler = logging.StreamHandler(stream=output_stream)  # get CLI handler (default=stderr)
         cli_handler.setFormatter(formatter)  # set formatter for CLI handler
         _logger.addHandler(cli_handler)  # add CLI handler to logger

@@ -40,17 +40,17 @@ for index in range(len(h100.songs)):
     print(f"ARTIST: {artist}")
     print(f"YEAR  : {year}")
     # q_uri = f"track:{song} year:{year} artist:{artist}"
-    q_uri = f"track:{song} year:{year}"
-    print(f"QUERY : q={q_uri}")
-    result = sp.search(q=q_uri, type="track")
+    # q_uri = f"track:{song} year:{year}"
+    # print(f"QUERY : q={q_uri}")
+    # result = sp.search(q=q_uri, type="track")
     # print(json.dumps(result, indent=4))
-    try:
-        song_uri = result["tracks"]["items"][0]["uri"]
+    song_uri = spc.search_track(song, year)
+    if song_uri:
         print(f"OK    | {song_uri}")
         song_uris.append(song_uri)
         found += 1
-    except IndexError:
-        print(f"ERROR | {q_uri} NOT found")
+    else:
+        print(f"ERROR | {song} NOT found")
         song_uris.append("NOT FOUND")
         not_found += 1
     pass

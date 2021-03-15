@@ -43,7 +43,7 @@ class SpotifyConnector:
         self.cache_path = cache_path
         self.oauth = None
         self.client = None
-        self.logger = logger.get_cli_logger(__class__.__name__)
+        self.logger = logger.get_cli_logger("CLASS:" + __class__.__name__)
         self.logger.setLevel("DEBUG")
 
     @logger.logger_decorator_with_arguments(True)
@@ -89,6 +89,20 @@ class SpotifyConnector:
         else:
             self.client = spotipy.Spotify(auth_manager=auth)
             return self.client
+
+    @logger.logger_decorator_with_arguments(True)
+    def search_track(self, song, year):
+        # q_uri = f"track:{song} year:{year} artist:{artist}"
+        q_uri = f"track:{song} year:{year}"
+        self.logger.debug(f"QUERY : q={q_uri}")
+        result = self.client.search(q=q_uri, type="track")
+        try:
+            song_uri = result["tracks"]["items"][0]["uri"]
+            self.logger.info(f"OK    | {song_uri}")
+            return song_uri
+        except IndexError:
+            self.logger.error(f"ERROR | {song} NOT found")
+            return None
 
     @logger.logger_decorator_with_arguments(True)
     def dump_spotify_token(self):
