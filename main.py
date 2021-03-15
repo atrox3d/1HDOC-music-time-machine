@@ -17,34 +17,28 @@ bb = Billboard()
 
 h100 = bb.get_songlist(date, testlogger1="test", testlogger2=2)
 h100.list()
-# exit()
 
-spc = SpotifyConnector(debug=False)
-sp = spc.get_client()
-print(type(sp.me()))
+spconn = SpotifyConnector(debug=False)
+spcli = spconn.get_client()
+print("me(): ", type(spcli.me()))
 print(
-    json.dumps(sp.me(), indent=4)
+    json.dumps(spcli.me(), indent=4)
 )
 
-print(spc.dump_spotify_token())
+print("token")
+print(spconn.dump_spotify_token())
 
 year = date.split("-")[0]
 song_uris = []
 found = 0
 not_found = 0
-# for song in h100.songs:
 for index in range(len(h100.songs)):
     song = h100.songs[index]
     artist = h100.artists[index]
     print(f"SONG  : {song}")
     print(f"ARTIST: {artist}")
     print(f"YEAR  : {year}")
-    # q_uri = f"track:{song} year:{year} artist:{artist}"
-    # q_uri = f"track:{song} year:{year}"
-    # print(f"QUERY : q={q_uri}")
-    # result = sp.search(q=q_uri, type="track")
-    # print(json.dumps(result, indent=4))
-    song_uri = spc.search_track(song, year)
+    song_uri = spconn.search_track(song, year)
     if song_uri:
         print(f"OK    | {song_uri}")
         song_uris.append(song_uri)
