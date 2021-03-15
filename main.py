@@ -3,12 +3,13 @@ from spotify import SpotifyConnector
 import json
 import util.logger
 
-date = "1981-12-27"     # adriano
-date = "1938-03-29"     # papà
-date = "1978-05-23"     # silvia
-date = "1970-07-13"     # io
 date = "1982-07-21"     # cika
 date = "2012-02-14"     # brian
+date = "1970-07-13"     # io
+date = "1981-12-27"     # adriano
+date = "1978-05-23"     # silvia
+date = "1938-03-29"     # papà
+
 if not date:
     # TODO: add regex for input validation
     date = input("when do you want to go? insert date in this format YYYY-MM-DD: ")
