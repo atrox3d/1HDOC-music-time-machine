@@ -167,14 +167,14 @@ def logger_decorator_with_arguments(
 
 
 if __name__ == '__main__':
-    logger = get_cli_logger()
+    logger = get_cli_logger("test." + __name__)
     logger.debug('testing testing')
     logger.info('testing testing')
     logger.warning('testing testing')
     logger.error('testing testing')
     logger.critical('testing testing')
 
-    logger = get_cli_logger('classname')
+    logger = get_cli_logger('test.classname')
     logger.debug('testing testing')
     logger.info('testing testing')
     logger.warning('testing testing')
