@@ -27,7 +27,7 @@ print(
 )
 
 print("token")
-print(spconn.dump_spotify_token())
+spconn.dump_spotify_token()
 
 year = date.split("-")[0]
 song_uris = []
@@ -51,3 +51,5 @@ for index in range(len(h100.songs)):
     pass
 
 print(f"found songs: {found}, not found songs: {not_found}")
+
+
