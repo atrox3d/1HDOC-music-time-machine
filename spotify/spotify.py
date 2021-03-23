@@ -2,11 +2,14 @@ import logging
 import requests
 from util import logger
 import spotipy
-from myob import spotify
 import json
+# from myob import spotify
+import util.parentimport
+util.parentimport.add_import_absolute_folder("../..")
+from _myob.music_time_machine import myob
 
-SPOTIFY_CLIENT_ID = spotify.CLIENT_ID
-SPOTIFY_CLIENT_SECRET = spotify.CLIENT_SECRET
+SPOTIFY_CLIENT_ID = myob.CLIENT_ID
+SPOTIFY_CLIENT_SECRET = myob.CLIENT_SECRET
 SPOTIFY_REDIRECT_URY = "http://localhost:1970"
 SPOTIFY_CLIENT_SCOPE = "playlist-modify-private"
 
@@ -134,3 +137,7 @@ class SpotifyConnector:
         with open(self.cache_path) as cachefile:
             j = json.load(cachefile)
             print(json.dumps(j, indent=4))
+
+
+if __name__ == "__main__":
+    spc = SpotifyConnector()
