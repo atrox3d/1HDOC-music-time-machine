@@ -14,7 +14,7 @@ if not date:
     # TODO: add regex for input validation
     date = input("when do you want to go? insert date in this format YYYY-MM-DD: ")
 
-util.logger.disable()
+# util.logger.disable()
 
 bb = Billboard()
 

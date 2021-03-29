@@ -5,7 +5,10 @@ import spotipy
 import json
 # from myob import spotify
 import util.parentimport
-util.parentimport.add_import_absolute_folder("../..")
+if __name__ == "__main__":
+    util.parentimport.add_import_absolute_folder("..")
+else:
+    util.parentimport.add_import_absolute_folder("../..")
 from _myob.music_time_machine import myob
 
 SPOTIFY_CLIENT_ID = myob.CLIENT_ID
