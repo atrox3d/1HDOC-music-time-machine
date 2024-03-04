@@ -2,3 +2,5 @@
 /.idea/
 /billboard-cache/
 /myob/
+
+__pycache__
